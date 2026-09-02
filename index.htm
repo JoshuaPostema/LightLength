@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interesting, straightforward information about the length of daylight today.">
+    <meta name="google-adsense-account" content="ca-pub-2588096176697810">
+    <title>Light Length</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #22d3ee;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: background 1s ease-in-out;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .site-header {
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .site-header:hover {
+            opacity: 0.8;
+        }
+
+        .site-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .site-tagline {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 800px;
+            gap: 1.5rem;
+            overflow: visible;
+            position: relative;
+            z-index: 10;
+        }
+
+        .content-row {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 1rem;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .info-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .info-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .info-section-title {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            opacity: 0.7;
+        }
+
+        .current-info {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .date-info {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .stat-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            text-align: center;
+        }
+
+        .current-graph {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            min-height: 100px;
+        }
+
+        .current-graph canvas {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .sun-times {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 0.5rem;
+            padding: 0 0.25rem;
+        }
+
+        .sun-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+        }
+
+        .sun-time-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .sun-time-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Timeline comparison rows */
+        .timeline-section {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 0.25rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .timeline-row.highlight {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent);
+        }
+
+        .timeline-date {
+            min-width: 140px;
+            text-align: left;
+        }
+
+        .timeline-date .date-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .timeline-date .date-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .timeline-length {
+            min-width: 70px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .timeline-diff {
+            min-width: 70px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .timeline-diff.positive {
+            color: #4ade80;
+        }
+
+        .timeline-diff.negative {
+            color: #f87171;
+        }
+
+
+        .timeline-graph {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline-graph canvas {
+            height: 40px;
+        }
+
+        .title {
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            min-height: 3em;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .data {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .data.positive {
+            color: #4ade80;
+        }
+
+        .data.negative {
+            color: #f87171;
+        }
+
+        .location-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+            justify-content: center;
+            position: relative;
+            overflow: visible;
+        }
+
+        .location-input-wrapper {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .location-input-wrapper input[type="text"] {
+            width: 100%;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 9999;
+            display: none;
+        }
+
+        .autocomplete-dropdown.show {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            text-align: left;
+            transition: background 0.15s ease;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: rgba(99, 102, 241, 0.3);
+        }
+
+        .autocomplete-item .place-name {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .autocomplete-item .place-detail {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: none;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--glass-border);
+            background: var(--card-bg);
+            color: var(--text);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+        }
+
+        button {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            border-radius: 12px;
+            font-size: 0.925rem;
+            font-weight: 500;
+            font-family: inherit;
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .bottomcontainer {
+            text-align: center;
+            color: var(--text);
+            max-width: 450px;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 1;
+        }
+
+        .bottomcontainer h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .bottomcontainer p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .bottomcontainer form {
+            display: inline;
+        }
+
+        .bottomcontainer button {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--glass-border);
+        }
+
+        .bottomcontainer button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: none;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--text);
+        }
+
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.25rem;
+            }
+
+            .current-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .date-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-row {
+                flex-wrap: wrap;
+            }
+
+            .timeline-date {
+                min-width: 100px;
+            }
+
+            .timeline-length {
+                min-width: 60px;
+            }
+
+            .location-input {
+                max-width: 100%;
+            }
+
+            .location-input-wrapper {
+                width: 100%;
+            }
+
+            .data {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+    <script src="jquery-3.7.1.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Store today's sun data for the selected location
+            let locationSunData = null;
+            let tomorrowSunrise = null;
+
+            // Test mode override
+            let testPeriod = null;
+
+            // Format time as HH:MM AM/PM
+            function formatTime(date) {
+                return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
+
+            // Format duration as Xh Ym
+            function formatDuration(ms) {
+                const totalMinutes = Math.floor(ms / 60000);
+                const hours = Math.floor(totalMinutes / 60);
+                const minutes = totalMinutes % 60;
+                if (hours > 0) {
+                    return `${hours}h ${minutes}m`;
+                }
+                return `${minutes}m`;
+            }
+
+            // Update time remaining/until sunrise and solar noon in Date Information section
+            function updateRightNow() {
+                if (!locationSunData) return;
+
+                const now = new Date();
+                const { sunrise, sunset, solarNoon } = locationSunData;
+                const timeRemainingEl = document.getElementById('time-remaining');
+                const timeRemainingLabel = document.getElementById('time-remaining-label');
+
+                // Determine if it's day or night and show appropriate countdown
+                if (now >= sunrise && now < sunset) {
+                    // Daytime - show remaining daylight
+                    const remaining = sunset - now;
+                    timeRemainingLabel.textContent = 'Daylight Remaining';
+                    timeRemainingEl.textContent = formatDuration(remaining);
+                } else {
+                    // Nighttime - show time until sunrise
+                    timeRemainingLabel.textContent = 'Until Sunrise';
+                    let nextSunrise;
+                    if (now < sunrise) {
+                        // Before today's sunrise
+                        nextSunrise = sunrise;
+                    } else if (tomorrowSunrise) {
+                        // After today's sunset, use tomorrow's sunrise
+                        nextSunrise = tomorrowSunrise;
+                    } else {
+                        // Estimate tomorrow's sunrise (roughly same time tomorrow)
+                        nextSunrise = new Date(sunrise);
+                        nextSunrise.setDate(nextSunrise.getDate() + 1);
+                    }
+                    const untilSunrise = nextSunrise - now;
+                    timeRemainingEl.textContent = formatDuration(untilSunrise);
+                }
+            }
+
+            // Determine time period based on location's sun times
+            function getLocationTimePeriod() {
+                // Allow test override
+                if (testPeriod !== null) {
+                    return testPeriod;
+                }
+
+                if (!locationSunData) {
+                    // Fallback to local time if no location data yet
+                    const hour = new Date().getHours();
+                    if (hour < 5 || hour >= 21) return 'night';
+                    if (hour < 8 || hour >= 18) return 'twilight';
+                    return 'day';
+                }
+
+                const now = new Date();
+                const { sunrise, sunset, civilTwilightBegin, civilTwilightEnd, astronomicalTwilightBegin, astronomicalTwilightEnd } = locationSunData;
+
+                // Use astronomical twilight for the widest twilight window
+                if (now < astronomicalTwilightBegin || now >= astronomicalTwilightEnd) {
+                    return 'night';
+                } else if (now < civilTwilightBegin || now >= civilTwilightEnd) {
+                    return 'twilight';
+                } else if (now < sunrise || now >= sunset) {
+                    return 'twilight';
+                } else {
+                    return 'day';
+                }
+            }
+
+            function updateBackground() {
+                const period = getLocationTimePeriod();
+                let gradient;
+                const root = document.documentElement;
+
+                if (period === 'night') {
+                    gradient = `linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)`;
+                    document.getElementById('stars').style.display = 'block';
+                    createStars();
+                    // Night colors - cool purples/blues
+                    root.style.setProperty('--text', '#e2e8f0');
+                    root.style.setProperty('--text-muted', '#94a3b8');
+                    root.style.setProperty('--accent', '#a78bfa');
+                    root.style.setProperty('--primary', '#7c3aed');
+                    root.style.setProperty('--primary-hover', '#6d28d9');
+                } else if (period === 'twilight') {
+                    gradient = `linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff9a44 100%)`;
+                    document.getElementById('stars').style.display = 'none';
+                    // Twilight colors - warm oranges/yellows
+                    root.style.setProperty('--text', '#fef3c7');
+                    root.style.setProperty('--text-muted', '#fcd34d');
+                    root.style.setProperty('--accent', '#fbbf24');
+                    root.style.setProperty('--primary', '#f59e0b');
+                    root.style.setProperty('--primary-hover', '#d97706');
+                } else {
+                    gradient = `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`;
+                    document.getElementById('stars').style.display = 'none';
+                    // Day colors - bright whites/cyans
+                    root.style.setProperty('--text', '#f8fafc');
+                    root.style.setProperty('--text-muted', '#cbd5e1');
+                    root.style.setProperty('--accent', '#22d3ee');
+                    root.style.setProperty('--primary', '#6366f1');
+                    root.style.setProperty('--primary-hover', '#4f46e5');
+                }
+
+                document.body.style.background = gradient;
+            }
+            
+            function calculateLastSameDaylight(dayOffset, startDate) {
+                const currentDate = startDate;
+                let lastSolsticeDate;
+                let nextSolsticeDate;
+
+                // Determine the most recent solstice
+                if ((currentDate.getMonth() < 11 && currentDate.getMonth() > 5) || (currentDate.getMonth() === 5 && currentDate.getDate() >= 21) || (currentDate.getMonth === 11 && currentDate.getDate() < 21)) {
+                    // If after June 21, the most recent solstice was June 21
+                    lastSolsticeDate = new Date(currentDate.getFullYear(), 5, 21); // June 21
+                } 
+                else if (currentDate.getMonth === 11 && currentDate.getDate >= 21) {
+                    lastSolsticeDate = new Date(currentDate.getFullYear(), 11, 21); // December 21
+                }
+                else {
+                    // If before June 21, the most recent solstice was December 21 of the previous year
+                    lastSolsticeDate = new Date(currentDate.getFullYear() - 1, 11, 21); // December 21
+                }
+
+                // Determine the next solstice
+                if ((currentDate.getMonth() < 11 && currentDate.getMonth() > 5) || (currentDate.getMonth() === 5 && currentDate.getDate() >= 21) || (currentDate.getMonth === 11 && currentDate.getDate() < 21)) {
+                    // If after June 21, the most recent solstice was June 21
+                    nextSolsticeDate = new Date(currentDate.getFullYear(), 11, 21);
+                } 
+                else if (currentDate.getMonth === 11 && currentDate.getDate >= 21) {
+                    nextSolsticeDate = new Date(currentDate.getFullYear() + 1, 5, 21);
+                }
+                else {
+                    // If before June 21, the most recent solstice was December 21 of the previous year
+                    nextSolsticeDate = new Date(currentDate.getFullYear(), 5, 21); // December 21
+                }
+
+                // Calculate the number of days elapsed since the solstice
+                const daysSinceSolstice = Math.floor((currentDate - lastSolsticeDate) / (1000 * 60 * 60 * 24));
+                const daysToSolstice = Math.floor((nextSolsticeDate - currentDate ) / (1000 * 60 * 60 * 24));
+
+
+                // Subtract the number of days from the solstice to get the "Last Day with Same Daylight"
+                lastDay = new Date(lastSolsticeDate);
+                lastDay.setDate(lastSolsticeDate.getDate() - daysSinceSolstice); // Go back the same number of days
+
+                // do stuff to the UI
+                if (startDate.getDate() === new Date().getDate() && startDate.getMonth() === new Date().getMonth() && startDate.getYear() === new Date().getYear()) {
+                    document.getElementById("days-since-solstice").textContent = `${daysSinceSolstice} Days`;
+                    document.getElementById("days-to-solstice").textContent = `${daysToSolstice} Days`;
+                }
+
+                return formatDateShort(lastDay);
+            }
+
+            function formatDaylightTime(hours) {
+                const h = Math.floor(hours);
+                const m = Math.round((hours - h) * 60);
+                return `${h}h ${m}m`;
+            }
+            
+            // Get color palette based on location's time of day
+            function getTimeBasedPalette() {
+                const period = getLocationTimePeriod();
+
+                if (period === 'night') {
+                    // Night palette - deep indigos and purples
+                    return {
+                        darkest: "#050510",
+                        dark: "#0f0c29",
+                        mid: "#302b63",
+                        light: "#24243e",
+                        accent: "#4a4494",
+                        indicator: "#8b7fc7"
+                    };
+                } else if (period === 'twilight') {
+                    // Dawn/Dusk palette - distinct progression from dark to light
+                    return {
+                        darkest: "#1a0a2e",    // deep purple (night)
+                        dark: "#5c1a3d",       // dark magenta (astronomical twilight)
+                        mid: "#c44569",        // rose (nautical twilight)
+                        light: "#ff8c42",      // orange (civil twilight)
+                        accent: "#ffd166",     // golden yellow (daylight)
+                        indicator: "#ffffff"
+                    };
+                } else {
+                    // Day palette - blues with light blue daylight
+                    return {
+                        darkest: "#1e3a5f",
+                        dark: "#2563eb",
+                        mid: "#60a5fa",
+                        light: "#7dd3fc",
+                        accent: "#bae6fd",
+                        indicator: "#ffffff"
+                    };
+                }
+            }
+
+            function drawDaylightGraph(sunData, graphName, showCurrentTime = false) {
+                const canvas = document.getElementById(graphName);
+                const ctx = canvas.getContext("2d");
+
+                // Use different sizes for main graph vs timeline graphs
+                const isMainGraph = graphName === "daylight-graph";
+                canvas.width = isMainGraph ? 500 : 300;
+                canvas.height = isMainGraph ? 80 : 40;
+
+                // Store sunData for redrawing when testing themes
+                canvas._sunData = sunData;
+                canvas._showCurrentTime = showCurrentTime;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const totalMinutes = 24 * 60;
+                const palette = getTimeBasedPalette();
+
+                // Calculate positions for each time
+                const toX = (date) => {
+                    const minutes = date.getHours() * 60 + date.getMinutes();
+                    return (minutes / totalMinutes) * canvas.width;
+                };
+
+                // All twilight positions
+                const astroTwilightBeginX = toX(sunData.astronomicalTwilightBegin);
+                const nauticalTwilightBeginX = toX(sunData.nauticalTwilightBegin);
+                const civilTwilightBeginX = toX(sunData.civilTwilightBegin);
+                const sunriseX = toX(sunData.sunrise);
+                const sunsetX = toX(sunData.sunset);
+                const civilTwilightEndX = toX(sunData.civilTwilightEnd);
+                const nauticalTwilightEndX = toX(sunData.nauticalTwilightEnd);
+                const astroTwilightEndX = toX(sunData.astronomicalTwilightEnd);
+
+                // Draw solid color blocks for each phase
+                // Night (before astronomical twilight)
+                ctx.fillStyle = palette.darkest;
+                ctx.fillRect(0, 0, astroTwilightBeginX, canvas.height);
+
+                // Astronomical twilight (morning)
+                ctx.fillStyle = palette.dark;
+                ctx.fillRect(astroTwilightBeginX, 0, nauticalTwilightBeginX - astroTwilightBeginX, canvas.height);
+
+                // Nautical twilight (morning)
+                ctx.fillStyle = palette.mid;
+                ctx.fillRect(nauticalTwilightBeginX, 0, civilTwilightBeginX - nauticalTwilightBeginX, canvas.height);
+
+                // Civil twilight (morning)
+                ctx.fillStyle = palette.light;
+                ctx.fillRect(civilTwilightBeginX, 0, sunriseX - civilTwilightBeginX, canvas.height);
+
+                // Daylight
+                ctx.fillStyle = palette.accent;
+                ctx.fillRect(sunriseX, 0, sunsetX - sunriseX, canvas.height);
+
+                // Civil twilight (evening)
+                ctx.fillStyle = palette.light;
+                ctx.fillRect(sunsetX, 0, civilTwilightEndX - sunsetX, canvas.height);
+
+                // Nautical twilight (evening)
+                ctx.fillStyle = palette.mid;
+                ctx.fillRect(civilTwilightEndX, 0, nauticalTwilightEndX - civilTwilightEndX, canvas.height);
+
+                // Astronomical twilight (evening)
+                ctx.fillStyle = palette.dark;
+                ctx.fillRect(nauticalTwilightEndX, 0, astroTwilightEndX - nauticalTwilightEndX, canvas.height);
+
+                // Night (after astronomical twilight)
+                ctx.fillStyle = palette.darkest;
+                ctx.fillRect(astroTwilightEndX, 0, canvas.width - astroTwilightEndX, canvas.height);
+
+                // Current time indicator
+                if (showCurrentTime) {
+                    const currentTime = new Date().getHours() * 60 + new Date().getMinutes();
+                    const currentTimeX = (currentTime / totalMinutes) * canvas.width;
+                    ctx.strokeStyle = palette.indicator;
+                    ctx.lineWidth = isMainGraph ? 3 : 2;
+                    ctx.shadowColor = palette.indicator;
+                    ctx.shadowBlur = isMainGraph ? 6 : 3;
+                    ctx.beginPath();
+                    ctx.moveTo(currentTimeX, 0);
+                    ctx.lineTo(currentTimeX, canvas.height);
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            // Function to generate a star pattern for night time
+            function createStars() {
+                const starsContainer = document.getElementById('stars');
+                starsContainer.innerHTML = ''; // Clear existing stars
+
+                const numStars = 225;
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 30}%`;  // Keep stars towards the top
+                    star.style.animationDelay = `${Math.random() * 3}s`;
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            function updateURLWithCoords(location, lat, lon) {
+                const url = new URL(window.location);
+                if (location) {
+                    url.searchParams.set("location", location);
+                } else {
+                    url.searchParams.delete("location");
+                }
+                url.searchParams.set("lat", lat);
+                url.searchParams.set("lon", lon);
+                window.history.pushState({}, "", url);
+            }
+
+            function formatDateShort(date) {
+                const options = { month: 'short', day: 'numeric' };
+                return date.toLocaleDateString('en-US', options);
+            }
+
+            function formatDiffTime(hours) {
+                const sign = hours >= 0 ? '+' : '-';
+                const totalMinutes = Math.abs(hours * 60);
+                const m = Math.round(totalMinutes);
+                if (m < 60) {
+                    return `${sign}${m}m`;
+                }
+                const h = Math.floor(totalMinutes / 60);
+                const mins = Math.round(totalMinutes % 60);
+                return `${sign}${h}h ${mins}m`;
+            }
+
+            // More precise version with seconds for daily changes
+            function formatDiffTimePrecise(hours) {
+                const sign = hours >= 0 ? '+' : '-';
+                const totalSeconds = Math.abs(hours * 3600);
+                const m = Math.floor(totalSeconds / 60);
+                const s = Math.round(totalSeconds % 60);
+                if (m < 60) {
+                    return `${sign}${m}m ${s}s`;
+                }
+                const h = Math.floor(m / 60);
+                const mins = m % 60;
+                return `${sign}${h}h ${mins}m ${s}s`;
+            }
+
+            // Store daylight lengths for difference calculations
+            let daylightLengths = {};
+
+            function updateDifferences() {
+                const todayLength = daylightLengths['today'];
+                if (todayLength === undefined) return;
+
+                // Update timeline differences (shows how much more/less that date has vs today)
+                const rows = ['onemonthback', 'oneweekback', 'oneweekforward', 'onemonthforward'];
+                rows.forEach(key => {
+                    const length = daylightLengths[key];
+                    if (length !== undefined) {
+                        const diff = length - todayLength;
+                        const diffEl = document.getElementById(`diff-${key}`);
+                        diffEl.textContent = formatDiffTime(diff);
+                        diffEl.className = 'timeline-diff ' + (diff >= 0 ? 'positive' : 'negative');
+                    }
+                });
+
+                // Today's diff is always 0
+                const todayDiffEl = document.getElementById('diff-today');
+                todayDiffEl.textContent = '—';
+                todayDiffEl.className = 'timeline-diff';
+
+                // Update yesterday/tomorrow changes
+                const yesterdayLength = daylightLengths['yesterday'];
+                const tomorrowLength = daylightLengths['tomorrow'];
+
+                if (yesterdayLength !== undefined) {
+                    const sinceYesterday = todayLength - yesterdayLength;
+                    const sinceEl = document.getElementById('change-since-yesterday');
+                    sinceEl.textContent = formatDiffTimePrecise(sinceYesterday);
+                    sinceEl.className = 'data ' + (sinceYesterday >= 0 ? 'positive' : 'negative');
+                }
+
+                if (tomorrowLength !== undefined) {
+                    const byTomorrow = tomorrowLength - todayLength;
+                    const byEl = document.getElementById('change-by-tomorrow');
+                    byEl.textContent = formatDiffTimePrecise(byTomorrow);
+                    byEl.className = 'data ' + (byTomorrow >= 0 ? 'positive' : 'negative');
+                }
+
+                // Update solstice gain/loss
+                const summerLength = daylightLengths['summerSolstice'];
+                const winterLength = daylightLengths['winterSolstice'];
+
+                if (summerLength !== undefined) {
+                    const leftToGain = summerLength - todayLength;
+                    const gainEl = document.getElementById('left-to-gain');
+                    gainEl.textContent = formatDiffTime(Math.max(0, leftToGain));
+                    gainEl.className = 'data positive';
+                }
+
+                if (winterLength !== undefined) {
+                    const leftToLose = todayLength - winterLength;
+                    const loseEl = document.getElementById('left-to-lose');
+                    loseEl.textContent = formatDiffTime(Math.max(0, leftToLose));
+                    loseEl.className = 'data positive';
+                }
+            }
+
+            async function fetchDaylightDataWithCoords(lat, lon, zip) {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (zip) updateURLWithCoords(zip, lat, lon);
+
+                // Reset daylight lengths
+                daylightLengths = {};
+
+                // Calculate today
+                let currentDate = new Date();
+                document.getElementById("date-today").textContent = formatDateShort(currentDate);
+                populateSunriseSunset(lat, lon, currentDate.getDate(), currentDate.getMonth() + 1, currentDate.getFullYear(), tz, "daylight-length", "last-same-daylight", "daylight-graph", true, true, 'today');
+                // Also populate the timeline today row
+                populateSunriseSunset(lat, lon, currentDate.getDate(), currentDate.getMonth() + 1, currentDate.getFullYear(), tz, "daylight-length-today", null, "daylight-graph-today", true, false);
+
+                // Calculate yesterday (for "since yesterday" stat)
+                const yesterday = new Date(currentDate);
+                yesterday.setDate(currentDate.getDate() - 1);
+                populateSunriseSunset(lat, lon, yesterday.getDate(), yesterday.getMonth() + 1, yesterday.getFullYear(), tz, null, null, null, false, false, 'yesterday');
+
+                // Calculate tomorrow (for "by tomorrow" stat)
+                const tomorrow = new Date(currentDate);
+                tomorrow.setDate(currentDate.getDate() + 1);
+                populateSunriseSunset(lat, lon, tomorrow.getDate(), tomorrow.getMonth() + 1, tomorrow.getFullYear(), tz, null, null, null, false, false, 'tomorrow');
+
+                // Calculate one month ago
+                const monthago = new Date(currentDate);
+                monthago.setMonth(currentDate.getMonth() - 1);
+                document.getElementById("date-onemonthback").textContent = formatDateShort(monthago);
+                populateSunriseSunset(lat, lon, monthago.getDate(), monthago.getMonth() + 1, monthago.getFullYear(), tz, "daylight-length-onemonthback", null, "daylight-graph-onemonthback", true, false, 'onemonthback');
+
+                // Calculate one week ago
+                const weekago = new Date(currentDate);
+                weekago.setDate(currentDate.getDate() - 7);
+                document.getElementById("date-oneweekback").textContent = formatDateShort(weekago);
+                populateSunriseSunset(lat, lon, weekago.getDate(), weekago.getMonth() + 1, weekago.getFullYear(), tz, "daylight-length-oneweekback", null, "daylight-graph-oneweekback", true, false, 'oneweekback');
+
+                // Calculate one week in the future
+                const weekahead = new Date(currentDate);
+                weekahead.setDate(currentDate.getDate() + 7);
+                document.getElementById("date-oneweekforward").textContent = formatDateShort(weekahead);
+                populateSunriseSunset(lat, lon, weekahead.getDate(), weekahead.getMonth() + 1, weekahead.getFullYear(), tz, "daylight-length-oneweekforward", null, "daylight-graph-oneweekforward", true, false, 'oneweekforward');
+
+                // Calculate one month in the future
+                const monthahead = new Date(currentDate);
+                monthahead.setMonth(currentDate.getMonth() + 1);
+                document.getElementById("date-onemonthforward").textContent = formatDateShort(monthahead);
+                populateSunriseSunset(lat, lon, monthahead.getDate(), monthahead.getMonth() + 1, monthahead.getFullYear(), tz, "daylight-length-onemonthforward", null, "daylight-graph-onemonthforward", true, false, 'onemonthforward');
+
+                // Calculate solstice dates for gain/loss calculations
+                const year = currentDate.getFullYear();
+
+                // Summer solstice (June 21) - longest day
+                let summerSolstice = new Date(year, 5, 21); // June 21
+                if (currentDate > summerSolstice) {
+                    summerSolstice = new Date(year + 1, 5, 21);
+                }
+                populateSunriseSunset(lat, lon, 21, 6, summerSolstice.getFullYear(), tz, null, null, null, false, false, 'summerSolstice');
+
+                // Winter solstice (December 21) - shortest day
+                let winterSolstice = new Date(year, 11, 21); // December 21
+                if (currentDate > winterSolstice) {
+                    winterSolstice = new Date(year + 1, 11, 21);
+                }
+                populateSunriseSunset(lat, lon, 21, 12, winterSolstice.getFullYear(), tz, null, null, null, false, false, 'winterSolstice');
+
+                // Display next solstice date
+                const nextSolstice = summerSolstice < winterSolstice ? summerSolstice : winterSolstice;
+                document.getElementById("next-solstice-date").textContent = formatDateShort(nextSolstice);
+
+                // Calculate and display last solstice date
+                let lastSummerSolstice = new Date(year, 5, 21);
+                let lastWinterSolstice = new Date(year, 11, 21);
+                if (currentDate <= lastSummerSolstice) {
+                    lastSummerSolstice = new Date(year - 1, 5, 21);
+                }
+                if (currentDate <= lastWinterSolstice) {
+                    lastWinterSolstice = new Date(year - 1, 11, 21);
+                }
+                const lastSolstice = lastSummerSolstice > lastWinterSolstice ? lastSummerSolstice : lastWinterSolstice;
+                document.getElementById("last-solstice-date").textContent = formatDateShort(lastSolstice);
+
+                // Content is visible by default with NYC placeholder data
+            }
+
+            // Geocode any location text using Nominatim
+            async function geocodeLocation(locationText) {
+                const encoded = encodeURIComponent(locationText);
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1`);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    return {
+                        lat: parseFloat(data[0].lat),
+                        lon: parseFloat(data[0].lon),
+                        displayName: data[0].display_name
+                    };
+                }
+                throw new Error("Location not found");
+            }
+
+            // Auto-detect location via IP
+            async function autoDetectLocation() {
+                // Use ipapi.co which supports HTTPS on free tier
+                const response = await fetch("https://ipapi.co/json/");
+                const data = await response.json();
+                if (data.latitude && data.longitude) {
+                    return {
+                        lat: data.latitude,
+                        lon: data.longitude,
+                        displayName: data.city ? `${data.city}, ${data.region}` : null
+                    };
+                }
+                throw new Error("Could not auto-detect location");
+            }
+
+            function populateSunriseSunset(lat, lng, day, month, year, tz, daylightLengthId, lastSameLengthId, graphId, showCurrentTime = false, isToday = false, trackKey = null) {
+                const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0&tzid=${tz}`;
+                console.log(url);
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const sunrise = new Date(data.results.sunrise);
+                        const sunset = new Date(data.results.sunset);
+                        const solarNoon = new Date(data.results.solar_noon);
+                        // All three twilight types
+                        const civilTwilightBegin = new Date(data.results.civil_twilight_begin);
+                        const civilTwilightEnd = new Date(data.results.civil_twilight_end);
+                        const nauticalTwilightBegin = new Date(data.results.nautical_twilight_begin);
+                        const nauticalTwilightEnd = new Date(data.results.nautical_twilight_end);
+                        const astronomicalTwilightBegin = new Date(data.results.astronomical_twilight_begin);
+                        const astronomicalTwilightEnd = new Date(data.results.astronomical_twilight_end);
+                        const daylightLength = (sunset - sunrise) / 3600000;
+
+                        // Store daylight length for difference calculations
+                        if (trackKey) {
+                            daylightLengths[trackKey] = daylightLength;
+                            updateDifferences();
+                        }
+
+                        // Store tomorrow's sunrise for "time until sunrise" calculation
+                        if (trackKey === 'tomorrow') {
+                            tomorrowSunrise = sunrise;
+                            updateRightNow();
+                        }
+
+                        // Store today's sun data for background/palette calculations (use astronomical for widest twilight)
+                        if (isToday) {
+                            locationSunData = {
+                                sunrise, sunset, solarNoon,
+                                civilTwilightBegin, civilTwilightEnd,
+                                nauticalTwilightBegin, nauticalTwilightEnd,
+                                astronomicalTwilightBegin, astronomicalTwilightEnd
+                            };
+                            updateBackground();
+                            updateRightNow();
+
+                            // Update theme button to show current theme
+                            const currentTheme = getLocationTimePeriod();
+                            document.getElementById('change-theme').textContent = currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1);
+
+                            // Update sun times display
+                            document.getElementById('time-dawn').textContent = formatTime(civilTwilightBegin);
+                            document.getElementById('time-sunrise').textContent = formatTime(sunrise);
+                            document.getElementById('time-noon').textContent = formatTime(solarNoon);
+                            document.getElementById('time-sunset').textContent = formatTime(sunset);
+                            document.getElementById('time-dusk').textContent = formatTime(civilTwilightEnd);
+                        }
+
+                        // Only update DOM elements if IDs are provided
+                        if (daylightLengthId) {
+                            document.getElementById(daylightLengthId).textContent = `${formatDaylightTime(daylightLength)}`;
+                        }
+                        if (lastSameLengthId) {
+                            const lastSameEl = document.getElementById(lastSameLengthId);
+                            if (lastSameEl) {
+                                lastSameEl.textContent = `${calculateLastSameDaylight(daylightLength, new Date(year, month - 1, day))}`;
+                            }
+                        }
+
+                        // Only draw graph if graphId is provided
+                        if (graphId) {
+                            const sunData = {
+                                sunrise, sunset,
+                                civilTwilightBegin, civilTwilightEnd,
+                                nauticalTwilightBegin, nauticalTwilightEnd,
+                                astronomicalTwilightBegin, astronomicalTwilightEnd
+                            };
+                            drawDaylightGraph(sunData, graphId, showCurrentTime);
+                        }
+                    })
+            }
+            
+            updateBackground();
+            setInterval(updateBackground, 60000);
+
+            // Update time remaining every minute
+            setInterval(updateRightNow, 60000);
+
+            // Test button to cycle through color schemes
+            const testPeriods = ['day', 'twilight', 'night'];
+            let testIndex = 0;
+
+            document.getElementById('change-theme').addEventListener('click', () => {
+                testIndex = (testIndex + 1) % testPeriods.length;
+                testPeriod = testPeriods[testIndex];
+                document.getElementById('change-theme').textContent = `${testPeriod.charAt(0).toUpperCase() + testPeriod.slice(1)}`;
+                updateBackground();
+                // Force redraw of all graphs with stored sunData
+                document.querySelectorAll('canvas').forEach(canvas => {
+                    if (canvas._sunData) {
+                        drawDaylightGraph(canvas._sunData, canvas.id, canvas._showCurrentTime);
+                    }
+                });
+            });
+
+            // Site header click to reset to auto-detected location
+            document.getElementById('site-header').addEventListener('click', () => {
+                locationInput.value = "";
+                autoDetectLocation()
+                    .then(result => {
+                        if (result.displayName) {
+                            locationInput.placeholder = result.displayName;
+                        }
+                        const url = new URL(window.location);
+                        url.searchParams.delete("location");
+                        url.searchParams.set("lat", result.lat);
+                        url.searchParams.set("lon", result.lon);
+                        window.history.pushState({}, "", url);
+                        fetchDaylightDataWithCoords(result.lat, result.lon, "");
+                    })
+                    .catch(() => {
+                        locationInput.placeholder = "New York City, NY (enter location to update)";
+                    });
+            });
+
+            const locationInput = document.getElementById("location-input");
+            const autocompleteDropdown = document.getElementById("autocomplete-dropdown");
+            let debounceTimer = null;
+            let currentSuggestions = [];
+
+            // Autocomplete search with debouncing using Photon API (CORS-friendly)
+            async function searchLocations(query) {
+                if (query.length < 2) {
+                    autocompleteDropdown.classList.remove("show");
+                    return;
+                }
+
+                try {
+                    // Detect US zip codes (5 digits or 5+4 format) and append USA
+                    let searchQuery = query;
+                    if (/^\d{5}(-\d{4})?$/.test(query.trim())) {
+                        searchQuery = query + " USA";
+                    }
+                    const encoded = encodeURIComponent(searchQuery);
+                    // Bias results toward continental US (lat 39, lon -98 is roughly center of US)
+                    const response = await fetch(`https://photon.komoot.io/api/?q=${encoded}&limit=5&lat=39&lon=-98`);
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status}`);
+                    }
+                    const data = await response.json();
+
+                    if (data && data.features && data.features.length > 0) {
+                        currentSuggestions = data.features.map(f => ({
+                            lat: f.geometry.coordinates[1],
+                            lon: f.geometry.coordinates[0],
+                            name: f.properties.name || '',
+                            city: f.properties.city || f.properties.name || '',
+                            state: f.properties.state || '',
+                            country: f.properties.country || ''
+                        }));
+                        renderSuggestions(currentSuggestions);
+                    } else {
+                        autocompleteDropdown.classList.remove("show");
+                    }
+                } catch (e) {
+                    console.error("Autocomplete error:", e);
+                    autocompleteDropdown.innerHTML = `<div class="autocomplete-item" style="color: var(--text-muted); cursor: default;">Search temporarily unavailable</div>`;
+                    autocompleteDropdown.classList.add("show");
+                }
+            }
+
+            function renderSuggestions(suggestions) {
+                autocompleteDropdown.innerHTML = suggestions.map((item, index) => {
+                    const placeName = item.name || item.city;
+                    const details = [item.state, item.country].filter(Boolean).join(", ");
+                    return `
+                        <div class="autocomplete-item" data-index="${index}">
+                            <div class="place-name">${placeName}</div>
+                            <div class="place-detail">${details}</div>
+                        </div>
+                    `;
+                }).join("");
+                autocompleteDropdown.classList.add("show");
+            }
+
+            // Handle autocomplete item selection
+            autocompleteDropdown.addEventListener("click", (e) => {
+                const item = e.target.closest(".autocomplete-item");
+                if (item) {
+                    const index = parseInt(item.dataset.index);
+                    const selected = currentSuggestions[index];
+                    const shortName = [selected.name || selected.city, selected.country].filter(Boolean).join(", ");
+
+                    locationInput.value = shortName;
+                    autocompleteDropdown.classList.remove("show");
+                    fetchDaylightDataWithCoords(selected.lat, selected.lon, shortName);
+                }
+            });
+
+            // Input event for autocomplete
+            locationInput.addEventListener("input", (e) => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    searchLocations(e.target.value.trim());
+                }, 300);
+            });
+
+            // Hide dropdown when clicking outside
+            document.addEventListener("click", (e) => {
+                if (!e.target.closest(".location-input-wrapper")) {
+                    autocompleteDropdown.classList.remove("show");
+                }
+            });
+
+            // Enter key selects first suggestion or hides dropdown
+            locationInput.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    if (currentSuggestions.length > 0 && autocompleteDropdown.classList.contains("show")) {
+                        const selected = currentSuggestions[0];
+                        const shortName = [selected.name || selected.city, selected.country].filter(Boolean).join(", ");
+                        locationInput.value = shortName;
+                        autocompleteDropdown.classList.remove("show");
+                        fetchDaylightDataWithCoords(selected.lat, selected.lon, shortName);
+                    }
+                } else if (event.key === "Escape") {
+                    autocompleteDropdown.classList.remove("show");
+                }
+            });
+
+            // Initialize from URL params or auto-detect via IP
+            const urlParams = new URLSearchParams(window.location.search);
+            const latFromURL = urlParams.get("lat");
+            const lonFromURL = urlParams.get("lon");
+            const locationFromURL = urlParams.get("location");
+
+            if (latFromURL && lonFromURL) {
+                // Use coordinates from URL
+                if (locationFromURL) {
+                    locationInput.value = locationFromURL;
+                }
+                fetchDaylightDataWithCoords(latFromURL, lonFromURL, locationFromURL || "");
+            } else {
+                // Auto-detect location via IP (silently fail if it doesn't work)
+                autoDetectLocation()
+                    .then(result => {
+                        if (result.displayName) {
+                            locationInput.placeholder = result.displayName;
+                        }
+                        fetchDaylightDataWithCoords(result.lat, result.lon, "");
+                    })
+                    .catch(error => {
+                        console.log("Could not auto-detect location, showing NYC defaults:", error);
+                        // Keep the NYC placeholder - default data is already displayed
+                    });
+            }
+        });
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2588096176697810"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="site-header" id="site-header">
+            <h1 class="site-title">Light Length</h1>
+            <p class="site-tagline">How much daylight do you have today?</p>
+        </div>
+        <div class="content-row">
+            <div class="info-sections">
+                <div class="info-section">
+                    <div class="info-section-title">Daylight Duration</div>
+                    <div class="current-info">
+                        <div class="stat-group">
+                            <div class="title">Last Solstice</div>
+                            <div class="data positive" id="left-to-lose">+4h 45m</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Yesterday</div>
+                            <div class="data positive" id="change-since-yesterday">+2m 23s</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Today</div>
+                            <div class="data" id="daylight-length">10h 10m</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Tomorrow</div>
+                            <div class="data positive" id="change-by-tomorrow">+2m 26s</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Next Solstice</div>
+                            <div class="data positive" id="left-to-gain">+4h 50m</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-section-title">Date Information</div>
+                    <div class="date-info">
+                        <div class="stat-group">
+                            <div class="title">Last Same Length</div>
+                            <div class="data" id="last-same-daylight">Nov 5</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Last Solstice</div>
+                            <div class="data" id="last-solstice-date">Dec 21</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Since Solstice</div>
+                            <div class="data" id="days-since-solstice">45 Days</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">Next Solstice</div>
+                            <div class="data" id="next-solstice-date">Jun 21</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title">To Solstice</div>
+                            <div class="data" id="days-to-solstice">137 Days</div>
+                        </div>
+                        <div class="stat-group">
+                            <div class="title" id="time-remaining-label">Daylight Remaining</div>
+                            <div class="data" id="time-remaining">8h 10m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="current-graph">
+                <canvas id="daylight-graph"></canvas>
+                <div class="sun-times">
+                    <div class="sun-time">
+                        <span class="sun-time-label">Dawn</span>
+                        <span class="sun-time-value" id="time-dawn">6:40 AM</span>
+                    </div>
+                    <div class="sun-time">
+                        <span class="sun-time-label">Sunrise</span>
+                        <span class="sun-time-value" id="time-sunrise">7:08 AM</span>
+                    </div>
+                    <div class="sun-time">
+                        <span class="sun-time-label">Solar Noon</span>
+                        <span class="sun-time-value" id="time-noon">12:12 PM</span>
+                    </div>
+                    <div class="sun-time">
+                        <span class="sun-time-label">Sunset</span>
+                        <span class="sun-time-value" id="time-sunset">5:18 PM</span>
+                    </div>
+                    <div class="sun-time">
+                        <span class="sun-time-label">Dusk</span>
+                        <span class="sun-time-value" id="time-dusk">5:46 PM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <div class="timeline-row" id="row-onemonthback">
+                <div class="timeline-date">
+                    <div class="date-label">1 Month Ago</div>
+                    <div class="date-value" id="date-onemonthback">Jan 4</div>
+                </div>
+                <div class="timeline-length" id="daylight-length-onemonthback">9h 20m</div>
+                <div class="timeline-diff negative" id="diff-onemonthback">-50m</div>
+                <div class="timeline-graph">
+                    <canvas id="daylight-graph-onemonthback"></canvas>
+                </div>
+            </div>
+            <div class="timeline-row" id="row-oneweekback">
+                <div class="timeline-date">
+                    <div class="date-label">1 Week Ago</div>
+                    <div class="date-value" id="date-oneweekback">Jan 28</div>
+                </div>
+                <div class="timeline-length" id="daylight-length-oneweekback">9h 53m</div>
+                <div class="timeline-diff negative" id="diff-oneweekback">-17m</div>
+                <div class="timeline-graph">
+                    <canvas id="daylight-graph-oneweekback"></canvas>
+                </div>
+            </div>
+            <div class="timeline-row highlight" id="row-today">
+                <div class="timeline-date">
+                    <div class="date-label">Today</div>
+                    <div class="date-value" id="date-today">Feb 4</div>
+                </div>
+                <div class="timeline-length" id="daylight-length-today">10h 10m</div>
+                <div class="timeline-diff" id="diff-today">—</div>
+                <div class="timeline-graph">
+                    <canvas id="daylight-graph-today"></canvas>
+                </div>
+            </div>
+            <div class="timeline-row" id="row-oneweekforward">
+                <div class="timeline-date">
+                    <div class="date-label">1 Week Ahead</div>
+                    <div class="date-value" id="date-oneweekforward">Feb 11</div>
+                </div>
+                <div class="timeline-length" id="daylight-length-oneweekforward">10h 30m</div>
+                <div class="timeline-diff positive" id="diff-oneweekforward">+20m</div>
+                <div class="timeline-graph">
+                    <canvas id="daylight-graph-oneweekforward"></canvas>
+                </div>
+            </div>
+            <div class="timeline-row" id="row-onemonthforward">
+                <div class="timeline-date">
+                    <div class="date-label">1 Month Ahead</div>
+                    <div class="date-value" id="date-onemonthforward">Mar 4</div>
+                </div>
+                <div class="timeline-length" id="daylight-length-onemonthforward">11h 15m</div>
+                <div class="timeline-diff positive" id="diff-onemonthforward">+1h 5m</div>
+                <div class="timeline-graph">
+                    <canvas id="daylight-graph-onemonthforward"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="location-input">
+            <div class="location-input-wrapper">
+                <input type="text" id="location-input" placeholder="New York City, NY (enter location to update)" autocomplete="off" />
+                <div id="autocomplete-dropdown" class="autocomplete-dropdown"></div>
+            </div>
+        </div>
+    </div>
+    <div class="bottomcontainer">
+        <h3>LightLength.com</h3>
+        <p>Interesting, straightforward information about the length of daylight today.</p>
+        <p>Powered by <a href="https://sunrise-sunset.org/api">Sunrise-Sunset API</a>, <a href="https://photon.komoot.io">Photon API</a>, &amp; <a href="https://ipapi.co">ipapi.co</a></p>
+        <p>Check out <a href="https://joshpostema.com">my other work</a>.</p>
+        <a href="https://buy.stripe.com/dRm14o6oLgux9Otcy6eUU00" target="_blank">
+            <button type="button">Support This Project</button>
+        </a>
+    </div>
+    <div id="stars"></div>
+    <button id="change-theme" style="position: fixed; bottom: 10px; right: 10px; padding: 8px 12px; font-size: 12px; opacity: 0.7;">Day</button>
+</body>
+</html>
